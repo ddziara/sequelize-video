@@ -48,15 +48,26 @@ const User = sequelize.define(
 User.sync({ alter: true })
   .then(() => {
     // working with our updated table
-    return User.create({
-      username: "WittCode",
-      password: "subscribe",
-      age: 25,
-      WittCodeRocks: false,
-    });
+    return User.bulkCreate([
+      {
+        username: "Tom",
+        age: 25,
+        password: "pizzasocker",
+      },
+      {
+        username: "Mike",
+        age: 31,
+        password: "12345",
+      },
+      {
+        username: "Freddie",
+      },
+    ]);
   })
   .then((data) => {
-    data.decrement({ age: 2 });
+    data.forEach((element) => {
+      console.log(element.toJSON());
+    });
   })
   .catch((err) => {
     console.log(err);
