@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const { DataTypes } = Sequelize;
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -18,23 +19,23 @@ const User = sequelize.define(
   "user",
   {
     user_id: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     username: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     password: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     age: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       defaultValue: 21,
     },
     WittCodeRocks: {
-      type: Sequelize.DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
   },
@@ -45,9 +46,19 @@ const User = sequelize.define(
 );
 
 User.sync({ alter: true })
+  .then(() => {
+    // working with our updated table
+    const user = User.build({
+      username: "WittCode",
+      password: "123",
+      age: 25,
+      WittCodeRocks: true,
+    });
+    return user.save();
+  })
   .then((data) => {
-    console.log("Table and model synced successfully");
+    console.log("User added to database!");
   })
   .catch((err) => {
-    console.log("Error syncing the table and model");
+    console.log(err);
   });
