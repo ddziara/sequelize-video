@@ -48,16 +48,21 @@ const User = sequelize.define(
 User.sync({ alter: true })
   .then(() => {
     // working with our updated table
-    const user = User.build({
+    return User.create({
       username: "WittCode",
-      password: "123",
+      password: "subscribe",
       age: 25,
-      WittCodeRocks: true,
+      WittCodeRocks: false,
     });
-    return user.save();
   })
   .then((data) => {
     console.log("User added to database!");
+    data.username = "pizza";
+    return data.save();
+  })
+  .then((data) => {
+    console.log("User updated!");
+    console.log(data.toJSON());
   })
   .catch((err) => {
     console.log(err);
