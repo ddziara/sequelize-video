@@ -57,12 +57,11 @@ User.sync({ alter: true })
   })
   .then((data) => {
     console.log("User added to database!");
-    data.username = "pizza";
-    return data.save();
+    return data.destroy();
   })
   .then((data) => {
-    console.log("User updated!");
-    console.log(data.toJSON());
+    console.log("User destroyed!");
+    console.log(data);
   })
   .catch((err) => {
     console.log(err);
