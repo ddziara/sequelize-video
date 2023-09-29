@@ -56,14 +56,7 @@ User.sync({ alter: true })
     });
   })
   .then((data) => {
-    console.log("User added to database!");
-    data.username = "pizza";
-    data.age = 45;
-    return data.save({fields: ["age"]});
-  })
-  .then((data) => {
-    console.log("User updated!");
-    console.log(data);
+    data.decrement({ age: 2 });
   })
   .catch((err) => {
     console.log(err);
