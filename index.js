@@ -14,13 +14,24 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection sucessful!");
+const User = sequelize.define("user", {
+  username: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: Sequelize.DataTypes.STRING,
+  },
+  age: {
+    type: Sequelize.DataTypes.INTEGER,
+    defaultValue: 21,
+  },
+});
+
+User.sync()
+  .then((data) => {
+    console.log("Table and model synced successfully");
   })
   .catch((err) => {
-    console.log("Error connecting to database!");
+    console.log("Error syncing the table and model");
   });
-
-console.log("Another task.");
