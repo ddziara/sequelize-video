@@ -57,10 +57,12 @@ User.sync({ alter: true })
   })
   .then((data) => {
     console.log("User added to database!");
-    return data.destroy();
+    data.username = "pizza";
+    data.age = 45;
+    return data.reload();
   })
   .then((data) => {
-    console.log("User destroyed!");
+    console.log("User returned to normal!");
     console.log(data);
   })
   .catch((err) => {
