@@ -14,21 +14,37 @@ const sequelize = new Sequelize(
   }
 );
 
-const User = sequelize.define("user", {
-  username: {
-    type: Sequelize.DataTypes.STRING,
-    allowNull: false,
+const User = sequelize.define(
+  "user",
+  {
+    user_id: {
+      type: Sequelize.DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    username: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: Sequelize.DataTypes.STRING,
+    },
+    age: {
+      type: Sequelize.DataTypes.INTEGER,
+      defaultValue: 21,
+    },
+    WittCodeRocks: {
+      type: Sequelize.DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
-  password: {
-    type: Sequelize.DataTypes.STRING,
-  },
-  age: {
-    type: Sequelize.DataTypes.INTEGER,
-    defaultValue: 21,
-  },
-});
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
-User.sync()
+User.sync({ alter: true })
   .then((data) => {
     console.log("Table and model synced successfully");
   })
