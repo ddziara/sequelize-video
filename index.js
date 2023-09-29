@@ -26,6 +26,9 @@ const User = sequelize.define(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [4, 6],
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -48,21 +51,26 @@ const User = sequelize.define(
 User.sync({ alter: true })
   .then(() => {
     // working with our updated table
-    return User.bulkCreate([
+    return User.bulkCreate(
+      [
+        {
+          username: "Tomrewrewytrey",
+          age: 25,
+          password: "pizzasocker",
+        },
+        {
+          username: "M",
+          age: 31,
+          password: "12345",
+        },
+        {
+          username: "Freddiedfgfdhgh",
+        },
+      ],
       {
-        username: "Tom",
-        age: 25,
-        password: "pizzasocker",
-      },
-      {
-        username: "Mike",
-        age: 31,
-        password: "12345",
-      },
-      {
-        username: "Freddie",
-      },
-    ]);
+        validate: true,
+      }
+    );
   })
   .then((data) => {
     data.forEach((element) => {
