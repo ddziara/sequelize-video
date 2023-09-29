@@ -59,10 +59,10 @@ User.sync({ alter: true })
     console.log("User added to database!");
     data.username = "pizza";
     data.age = 45;
-    return data.reload();
+    return data.save({fields: ["age"]});
   })
   .then((data) => {
-    console.log("User returned to normal!");
+    console.log("User updated!");
     console.log(data);
   })
   .catch((err) => {
