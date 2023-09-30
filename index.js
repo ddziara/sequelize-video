@@ -97,13 +97,35 @@ User.sync({ alter: true })
     // })
     // return User.max('age');          // utility function
     // return User.sum('age');          // utility function
-    return User.sum("age", { where: { age: 21 } }); // utility function
+    // return User.sum("age", { where: { age: 21 } }); // utility function
+    // return User.findAll({ raw: true });           // like toJSON()
+    // return User.findAll({ where: { age: 25 }, raw: true }); // like toJSON()
+    // return User.findByPk(29);          // find by primary key
+    // return User.findOne();                // returns the first row
+    // return User.findOne({where: {
+    //   age: {
+    //     [Op.or]: {
+    //       [Op.lt]: 28,
+    //       [Op.eq]: null
+    //     }
+    //   }
+    // }});                // returns the first row
+    // return User.findOrCreate({ where: { username: "Pizza" } });
+    return User.findOrCreate({
+      where: { username: "Tomm" },
+      defaults: {
+        age: 37,
+      },
+    });
   })
   .then((data) => {
-    console.log(data);
+    // console.log(data);
+    // console.log(data.toJSON());
     // data.forEach((element) => {
     //   console.log(element.toJSON());
     // });
+    const [result, created] = data;
+    console.log(created);
   })
   .catch((err) => {
     console.log(err);
