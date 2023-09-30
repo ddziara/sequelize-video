@@ -111,11 +111,17 @@ User.sync({ alter: true })
     //   }
     // }});                // returns the first row
     // return User.findOrCreate({ where: { username: "Pizza" } });
-    return User.findOrCreate({
-      where: { username: "Tomm" },
-      defaults: {
-        age: 37,
+    // return User.findOrCreate({
+    //   where: { username: "Tomm" },
+    //   defaults: {
+    //     age: 37,
+    //   },
+    // });
+    return User.findAndCountAll({
+      where: {
+        username: "WittCo",
       },
+      raw: true,
     });
   })
   .then((data) => {
@@ -124,8 +130,10 @@ User.sync({ alter: true })
     // data.forEach((element) => {
     //   console.log(element.toJSON());
     // });
-    const [result, created] = data;
-    console.log(created);
+    // const [result, created] = data;
+    // console.log(created);
+    const { count, rows } = data;
+    console.log(count, rows);
   })
   .catch((err) => {
     console.log(err);
