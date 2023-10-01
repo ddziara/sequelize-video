@@ -91,14 +91,13 @@ const User = sequelize.define(
     timestamps: false,
     validate: {
       usernamePassMatch() {
-        if(this.username === this.password) {
+        if (this.username === this.password) {
           throw new Error("Password cannot be your username!");
+        } else {
+          console.log("Soccer");
         }
-        else {
-          console.log("Soccer")
-        }
-      }
-    }
+      },
+    },
   }
 );
 
@@ -191,11 +190,12 @@ User.sync({ alter: true })
     // });
     // const user = User.build({ email: "tom" });
     // return user.validate();
-    return User.create({
-      username: "mike",
-      password: "mike",
-      age: 31,
-    });
+    // return User.create({
+    //   username: "mike",
+    //   password: "mike",
+    //   age: 31,
+    // });
+    return sequelize.query(`UPDATE public.user SET age = 54 WHERE username = 'WittCo'`);
   })
   .then((data) => {
     // console.log(data);
@@ -212,7 +212,8 @@ User.sync({ alter: true })
     // console.log(data.description);
     // console.log(data.aboutUser);
     // console.log(data.toJSON());
-    console.log(data);
+    const [result, metadata] = data;
+    console.log(result, metadata);
   })
   .catch((err) => {
     console.log(err);
