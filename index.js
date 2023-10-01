@@ -47,6 +47,13 @@ const User = sequelize.define(
     age: {
       type: DataTypes.INTEGER,
       defaultValue: 21,
+      validate: {
+        isOldEnough(value) {
+          if (value < 21) {
+            throw new Error("Too young!");
+          }
+        },
+      },
     },
     WittCodeRocks: {
       type: DataTypes.BOOLEAN,
@@ -171,8 +178,12 @@ User.sync({ alter: true })
     //   password: "mypassword",
     //   email: "hello",
     // });
-    const user = User.build({ email: "tom" });
-    return user.validate();
+    // const user = User.build({ email: "tom" });
+    // return user.validate();
+    return User.create({
+      username: "mike",
+      age: 14,
+    });
   })
   .then((data) => {
     // console.log(data);
