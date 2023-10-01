@@ -195,7 +195,7 @@ User.sync({ alter: true })
     //   password: "mike",
     //   age: 31,
     // });
-    return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { model: User }); // returned data will be instances of provided model
+    return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { model: User, plain: true }); // returned data will be instances of provided model
   })
   .then((data) => {
     // console.log(data);
