@@ -89,6 +89,16 @@ const User = sequelize.define(
   {
     freezeTableName: true,
     timestamps: false,
+    validate: {
+      usernamePassMatch() {
+        if(this.username === this.password) {
+          throw new Error("Password cannot be your username!");
+        }
+        else {
+          console.log("Soccer")
+        }
+      }
+    }
   }
 );
 
@@ -183,8 +193,8 @@ User.sync({ alter: true })
     // return user.validate();
     return User.create({
       username: "mike",
+      password: "mike",
       age: 31,
-      email: null,
     });
   })
   .then((data) => {
