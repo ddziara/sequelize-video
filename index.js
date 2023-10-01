@@ -31,18 +31,18 @@ const User = sequelize.define(
       validate: {
         len: [4, 6],
       },
-      get() {
-        const rawValue = this.getDataValue("username");
-        return rawValue.toUpperCase();
-      },
+      // get() {
+      //   const rawValue = this.getDataValue("username");
+      //   return rawValue.toUpperCase();
+      // },
     },
     password: {
       type: DataTypes.STRING,
-      set(value) {
-        const salt = bcrypt.genSaltSync(12);
-        const hash = bcrypt.hashSync(value, salt);
-        this.setDataValue("password", hash);
-      },
+      // set(value) {
+      //   const salt = bcrypt.genSaltSync(12);
+      //   const hash = bcrypt.hashSync(value, salt);
+      //   this.setDataValue("password", hash);
+      // },
     },
     age: {
       type: DataTypes.INTEGER,
@@ -54,22 +54,26 @@ const User = sequelize.define(
     },
     description: {
       type: DataTypes.STRING,
-      set(value) {
-        const compressed = zlib.deflateSync(value).toString("base64");
-        this.setDataValue("description", compressed);
-      },
-      get() {
-        const value = this.getDataValue("description");
-        const uncompressed = zlib.inflateSync(Buffer.from(value, "base64"));
-        return uncompressed;
-      },
+      // set(value) {
+      //   const compressed = zlib.deflateSync(value).toString("base64");
+      //   this.setDataValue("description", compressed);
+      // },
+      // get() {
+      //   const value = this.getDataValue("description");
+      //   const uncompressed = zlib.inflateSync(Buffer.from(value, "base64"));
+      //   return uncompressed;
+      // },
     },
     aboutUser: {
       type: DataTypes.VIRTUAL,
       get() {
-        return `${this.username} ${this.description}`
-      }
-    }
+        return `${this.username} ${this.description}`;
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
   },
   {
     freezeTableName: true,
@@ -158,7 +162,12 @@ User.sync({ alter: true })
     //   password: "sockerpizza",
     //   description: "This is my description it could be really long.",
     // });
-    return User.findOne({ where: {username: "Wire"}});
+    // return User.findOne({ where: { username: "Wire" } });
+    return User.create({
+      username: "1111",
+      password: "mypassword",
+      email: "tom@aol.coms",
+    });
   })
   .then((data) => {
     // console.log(data);
@@ -173,7 +182,8 @@ User.sync({ alter: true })
     // console.log(data.username);
     // console.log(data.password);
     // console.log(data.description);
-    console.log(data.aboutUser);
+    // console.log(data.aboutUser);
+    console.log(data.toJSON());
   })
   .catch((err) => {
     console.log(err);
