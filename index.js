@@ -166,11 +166,13 @@ User.sync({ alter: true })
     //   description: "This is my description it could be really long.",
     // });
     // return User.findOne({ where: { username: "Wire" } });
-    return User.create({
-      username: "1111",
-      password: "mypassword",
-      email: "hello",
-    });
+    // return User.create({
+    //   username: "1111",
+    //   password: "mypassword",
+    //   email: "hello",
+    // });
+    const user = User.build({ email: "tom" });
+    return user.validate();
   })
   .then((data) => {
     // console.log(data);
@@ -186,7 +188,8 @@ User.sync({ alter: true })
     // console.log(data.password);
     // console.log(data.description);
     // console.log(data.aboutUser);
-    console.log(data.toJSON());
+    // console.log(data.toJSON());
+    console.log(data);
   })
   .catch((err) => {
     console.log(err);
