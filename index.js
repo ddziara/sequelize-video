@@ -195,7 +195,7 @@ User.sync({ alter: true })
     //   password: "mike",
     //   age: 31,
     // });
-    return sequelize.query(`UPDATE public.user SET age = 54 WHERE username = 'WittCo'`);
+    return sequelize.query(`SELECT * FROM public.user`, { type: Sequelize.QueryTypes.SELECT });
   })
   .then((data) => {
     // console.log(data);
@@ -212,8 +212,7 @@ User.sync({ alter: true })
     // console.log(data.description);
     // console.log(data.aboutUser);
     // console.log(data.toJSON());
-    const [result, metadata] = data;
-    console.log(result, metadata);
+    console.log(data);
   })
   .catch((err) => {
     console.log(err);
