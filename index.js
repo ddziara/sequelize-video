@@ -48,9 +48,7 @@ const User = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 21,
       validate: {
-        isNumeric: {
-          msg: "You must enter a number for age!",
-        },
+        isNumeric: true,
       },
     },
     WittCodeRocks: {
