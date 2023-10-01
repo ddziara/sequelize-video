@@ -81,7 +81,7 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isEmail: true,
+        isIn: ["me@soccer.org", "me@soccer.com"],
       },
     },
   },
@@ -182,7 +182,8 @@ User.sync({ alter: true })
     // return user.validate();
     return User.create({
       username: "mike",
-      age: 14,
+      age: 31,
+      email: "me@soccerisfun.org",
     });
   })
   .then((data) => {
