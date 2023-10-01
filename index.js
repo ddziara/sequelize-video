@@ -101,6 +101,10 @@ const User = sequelize.define(
   }
 );
 
+function myFunction() {
+  console.log("RUNNING SQL STATEMENT");
+}
+
 User.sync({ alter: true })
   .then(() => {
     // working with our updated table
@@ -195,7 +199,7 @@ User.sync({ alter: true })
     //   password: "mike",
     //   age: 31,
     // });
-    return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { model: User, plain: true }); // returned data will be instances of provided model
+    return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { logging: myFunction }); 
   })
   .then((data) => {
     // console.log(data);
