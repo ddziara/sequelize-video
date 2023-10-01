@@ -64,6 +64,12 @@ const User = sequelize.define(
         return uncompressed;
       },
     },
+    aboutUser: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.username} ${this.description}`
+      }
+    }
   },
   {
     freezeTableName: true,
@@ -147,11 +153,12 @@ User.sync({ alter: true })
     //   raw: true,
     // });
     // return User.findOne();
-    return User.create({
-      username: "Wire",
-      password: "sockerpizza",
-      description: "This is my description it could be really long.",
-    });
+    // return User.create({
+    //   username: "Wire",
+    //   password: "sockerpizza",
+    //   description: "This is my description it could be really long.",
+    // });
+    return User.findOne({ where: {username: "Wire"}});
   })
   .then((data) => {
     // console.log(data);
@@ -163,9 +170,10 @@ User.sync({ alter: true })
     // console.log(created);
     // const { count, rows } = data;
     // console.log(count, rows);
-    console.log(data.username);
-    console.log(data.password);
-    console.log(data.description);
+    // console.log(data.username);
+    // console.log(data.password);
+    // console.log(data.description);
+    console.log(data.aboutUser);
   })
   .catch((err) => {
     console.log(err);
