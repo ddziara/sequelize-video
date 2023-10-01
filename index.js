@@ -48,10 +48,8 @@ const User = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 21,
       validate: {
-        isOldEnough(value) {
-          if (value < 21) {
-            throw new Error("Too young!");
-          }
+        isNumeric: {
+          msg: "You must enter a number for age!",
         },
       },
     },
@@ -80,9 +78,6 @@ const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
-      validate: {
-        isIn: ["me@soccer.org", "me@soccer.com"],
-      },
     },
   },
   {
@@ -182,8 +177,8 @@ User.sync({ alter: true })
     // return user.validate();
     return User.create({
       username: "mike",
-      age: 31,
-      email: "me@soccerisfun.org",
+      age: '31fg',
+      email: "me@soccer12.org",
     });
   })
   .then((data) => {
