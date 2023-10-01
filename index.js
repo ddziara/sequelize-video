@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const { DataTypes, Op } = Sequelize;
 const dotenv = require("dotenv");
+const bcrypt = require('bcrypt');
 
 dotenv.config();
 
@@ -29,9 +30,18 @@ const User = sequelize.define(
       validate: {
         len: [4, 6],
       },
+      get() {
+        const rawValue = this.getDataValue("username");
+        return rawValue.toUpperCase();
+      },
     },
     password: {
       type: DataTypes.STRING,
+      set(value) {
+        const salt = bcrypt.genSaltSync(12);
+        const hash = bcrypt.hashSync(value, salt);
+        this.setDataValue('password', hash);
+      }
     },
     age: {
       type: DataTypes.INTEGER,
@@ -117,11 +127,16 @@ User.sync({ alter: true })
     //     age: 37,
     //   },
     // });
-    return User.findAndCountAll({
-      where: {
-        username: "WittCo",
-      },
-      raw: true,
+    // return User.findAndCountAll({
+    //   where: {
+    //     username: "WittCo",
+    //   },
+    //   raw: true,
+    // });
+    // return User.findOne();
+    return User.create({
+      username: "Witt",
+      password: "sockerisfun67",
     });
   })
   .then((data) => {
@@ -132,8 +147,10 @@ User.sync({ alter: true })
     // });
     // const [result, created] = data;
     // console.log(created);
-    const { count, rows } = data;
-    console.log(count, rows);
+    // const { count, rows } = data;
+    // console.log(count, rows);
+    console.log(data.username);
+    console.log(data.password);
   })
   .catch((err) => {
     console.log(err);
