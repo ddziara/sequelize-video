@@ -76,6 +76,14 @@ const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
+      allowNull: true,
+      validate: {
+        myEmailValidator(value) {
+          if (value === null) {
+            throw new Error("Please enter an email!");
+          }
+        },
+      },
     },
   },
   {
@@ -175,8 +183,8 @@ User.sync({ alter: true })
     // return user.validate();
     return User.create({
       username: "mike",
-      age: '31fg',
-      email: "me@soccer12.org",
+      age: 31,
+      email: null,
     });
   })
   .then((data) => {
