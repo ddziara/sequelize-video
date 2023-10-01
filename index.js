@@ -199,7 +199,11 @@ User.sync({ alter: true })
     //   password: "mike",
     //   age: 31,
     // });
-    return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { logging: myFunction }); 
+    // return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { logging: myFunction });
+    return sequelize.query(`SELECT * FROM public.user WHERE username = :username`, {
+      replacements: { username: "mike" },
+      plain: true                            // without extra info (like toJSON())
+    });
   })
   .then((data) => {
     // console.log(data);
