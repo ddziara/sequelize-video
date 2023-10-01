@@ -1,7 +1,8 @@
 const Sequelize = require("sequelize");
 const { DataTypes, Op } = Sequelize;
 const dotenv = require("dotenv");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const zlib = require("zlib");
 
 dotenv.config();
 
@@ -40,8 +41,8 @@ const User = sequelize.define(
       set(value) {
         const salt = bcrypt.genSaltSync(12);
         const hash = bcrypt.hashSync(value, salt);
-        this.setDataValue('password', hash);
-      }
+        this.setDataValue("password", hash);
+      },
     },
     age: {
       type: DataTypes.INTEGER,
@@ -50,6 +51,18 @@ const User = sequelize.define(
     WittCodeRocks: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    description: {
+      type: DataTypes.STRING,
+      set(value) {
+        const compressed = zlib.deflateSync(value).toString("base64");
+        this.setDataValue("description", compressed);
+      },
+      get() {
+        const value = this.getDataValue("description");
+        const uncompressed = zlib.inflateSync(Buffer.from(value, "base64"));
+        return uncompressed;
+      },
     },
   },
   {
@@ -135,8 +148,9 @@ User.sync({ alter: true })
     // });
     // return User.findOne();
     return User.create({
-      username: "Witt",
-      password: "sockerisfun67",
+      username: "Wire",
+      password: "sockerpizza",
+      description: "This is my description it could be really long.",
     });
   })
   .then((data) => {
@@ -151,6 +165,7 @@ User.sync({ alter: true })
     // console.log(count, rows);
     console.log(data.username);
     console.log(data.password);
+    console.log(data.description);
   })
   .catch((err) => {
     console.log(err);
