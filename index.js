@@ -209,7 +209,7 @@ User.sync({ alter: true })
     //     // plain: true                            // without extra info (like toJSON())
     //   }
     // );
-/*    return User.destroy({ where: { user_id: 28 } }); */
+    return User.destroy({ where: { user_id: 28 }, force: true }); 
 return User.findAll();
   })
   .then((data) => {
