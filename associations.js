@@ -39,40 +39,21 @@ const Capital = sequelize.define(
 
 Country.hasOne(Capital);
 
+let country, capital;
+
 sequelize
   .sync({ sync: "alter" })
   .then((data) => {
     // working with our updated table
-
-    Country.bulkCreate([
-      {
-        countryName: "Spain",
-      },
-      {
-        countryName: "England",
-      },
-      {
-        countryName: "Gernamy",
-      },
-      {
-        countryName: "France",
-      },
-    ]);
-
-    Capital.bulkCreate([
-      {
-        capitalName: "Berlin",
-      },
-      {
-        capitalName: "Paris",
-      },
-      {
-        capitalName: "Madrid",
-      },
-      {
-        capitalName: "London",
-      },
-    ]);
+    return Capital.findOne({ where: { capitalName: "Madrid" } });
+  })
+  .then((data) => {
+    capital = data;
+    return Country.findOne({ where: { countryName: "Spain" } });
+  })
+  .then(data => {
+    country = data;
+    country.setCapital(capital);
   })
   .catch((err) => {
     console.log(err);
