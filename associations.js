@@ -37,7 +37,7 @@ const Capital = sequelize.define(
   { timestamps: false }
 );
 
-Country.hasOne(Capital);
+Country.hasOne(Capital, { foreignKey: "soccer" });
 
 sequelize
   .sync({ sync: "alter" })
