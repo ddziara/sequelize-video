@@ -18,7 +18,7 @@ const sequelize = new Sequelize(
 const Country = sequelize.define(
   "country",
   {
-    contryName: {
+    countryName: {
       type: DataTypes.STRING,
       unique: true,
     },
@@ -37,12 +37,42 @@ const Capital = sequelize.define(
   { timestamps: false }
 );
 
-Country.hasOne(Capital, { foreignKey: "soccer" });
+Country.hasOne(Capital);
 
 sequelize
   .sync({ sync: "alter" })
   .then((data) => {
     // working with our updated table
+
+    Country.bulkCreate([
+      {
+        countryName: "Spain",
+      },
+      {
+        countryName: "England",
+      },
+      {
+        countryName: "Gernamy",
+      },
+      {
+        countryName: "France",
+      },
+    ]);
+
+    Capital.bulkCreate([
+      {
+        capitalName: "Berlin",
+      },
+      {
+        capitalName: "Paris",
+      },
+      {
+        capitalName: "Madrid",
+      },
+      {
+        capitalName: "London",
+      },
+    ]);
   })
   .catch((err) => {
     console.log(err);
