@@ -88,7 +88,7 @@ const User = sequelize.define(
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true, // needs to be true for paranoid tables (note: after setting it to 'true' there's an error because default NULL)
     validate: {
       usernamePassMatch() {
         if (this.username === this.password) {
@@ -98,6 +98,7 @@ const User = sequelize.define(
         }
       },
     },
+    paranoid: true,
   }
 );
 
@@ -200,10 +201,14 @@ User.sync({ alter: true })
     //   age: 31,
     // });
     // return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { logging: myFunction });
-    return sequelize.query(`SELECT * FROM public.user WHERE username LIKE :username`, {
-      replacements: { username: "Witt%" },
-      // plain: true                            // without extra info (like toJSON())
-    });
+    // return sequelize.query(
+    //   `SELECT * FROM public.user WHERE username LIKE :username`,
+    //   {
+    //     replacements: { username: "Witt%" },
+    //     // plain: true                            // without extra info (like toJSON())
+    //   }
+    // );
+    return User.destroy({ where: { user_id: 28 } });
   })
   .then((data) => {
     // console.log(data);
