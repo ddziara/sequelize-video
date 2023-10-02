@@ -45,15 +45,14 @@ sequelize
   .sync({ sync: "alter" })
   .then((data) => {
     // working with our updated table
-    return Capital.findOne({ where: { capitalName: "Madrid" } });
-  })
-  .then((data) => {
-    capital = data;
     return Country.findOne({ where: { countryName: "Spain" } });
   })
-  .then(data => {
+  .then((data) => {
     country = data;
-    country.setCapital(capital);
+    return country.getCapital();
+  })
+  .then(data => {
+    console.log(data.toJSON());
   })
   .catch((err) => {
     console.log(err);
