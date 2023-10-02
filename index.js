@@ -200,9 +200,9 @@ User.sync({ alter: true })
     //   age: 31,
     // });
     // return sequelize.query(`SELECT * FROM public.user LIMIT 2`, { logging: myFunction });
-    return sequelize.query(`SELECT * FROM public.user WHERE username = :username`, {
-      replacements: { username: "mike" },
-      plain: true                            // without extra info (like toJSON())
+    return sequelize.query(`SELECT * FROM public.user WHERE username IN(:username)`, {
+      replacements: { username: ["mike", "WittCo"] },
+      // plain: true                            // without extra info (like toJSON())
     });
   })
   .then((data) => {
