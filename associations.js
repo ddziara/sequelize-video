@@ -38,6 +38,7 @@ const Capital = sequelize.define(
 );
 
 Country.hasOne(Capital);
+Capital.belongsTo(Country);
 
 let country, capital;
 
@@ -45,19 +46,28 @@ sequelize
   .sync({ sync: "alter" })
   .then((data) => {
     // working with our updated table
-    return Country.create({
-      countryName: "USA",
+    return Country.findOne({
+      where: {
+        countryName: "France",
+      },
     });
   })
   .then((data) => {
     country = data;
-    return country.createCapital({
-      capitalName: "Washington, D.C.",
+    return Capital.findOne({
+      where: {
+        capitalName: "Paris",
+      },
     });
   })
-  .then((data) => {
-    console.log(data.toJSON());
-  })
+    .then((data) => {
+      capital = data;
+      console.log("capital: ", capital.toJSON());
+      return capital.setCountry(country);
+    })
+    .then((data) => {
+      console.log(data.toJSON());
+    })
   .catch((err) => {
     console.log(err);
   });
