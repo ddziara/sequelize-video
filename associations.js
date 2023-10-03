@@ -50,11 +50,11 @@ sequelize
   })
   .then((data) => {
     country = data;
-    return Capital.findOne({ where: { capitalName: "London" } });
+    return Capital.findOne({ where: { capitalName: "Paris" } });
   })
   .then((data) => {
     capital = data;
-    country.setCapital(capital);
+    capital.setCountry(country);
   })
   .then((data) => {
     // console.log(data);
