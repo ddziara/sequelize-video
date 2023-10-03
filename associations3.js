@@ -56,15 +56,10 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    return Product.findOne({ where: { productName: "laptop" } });
+    return Customer.destroy({ where: { customerName: "WittCode" } });
   })
   .then((data) => {
-    product = data;
-    return Customer.findAll();
-  })
-  .then((data) => {
-    customer = data;
-    product.addCustomers(customer);
+    console.log(data);
   })
   .catch((err) => {
     console.log(err);
