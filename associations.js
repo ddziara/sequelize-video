@@ -37,7 +37,7 @@ const Capital = sequelize.define(
   { timestamps: false }
 );
 
-Country.hasOne(Capital, { onDelete: "CASCADE" });
+Country.hasOne(Capital, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Capital.belongsTo(Country);
 
 let country, capital;
@@ -46,10 +46,18 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    return Country.destroy({ where: { countryName: "Spain" } });
+    return Country.findOne({ where: { countryName: "France" } });
   })
   .then((data) => {
-    console.log(data);
+    country = data;
+    return Capital.findOne({ where: { capitalName: "London" } });
+  })
+  .then((data) => {
+    capital = data;
+    country.setCapital(capital);
+  })
+  .then((data) => {
+    // console.log(data);
   })
   .catch((err) => {
     console.log(err);
