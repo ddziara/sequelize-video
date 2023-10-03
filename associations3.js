@@ -41,12 +41,11 @@ const CustomerProduct = sequelize.define(
     customerproductId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
   },
   { timestamps: false }
 );
-
 
 Customer.belongsToMany(Product, { through: CustomerProduct });
 Product.belongsToMany(Customer, { through: CustomerProduct });
@@ -55,6 +54,35 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
+    Customer.bulkCreate([
+      {
+        customerName: "WittCode",
+      },
+      {
+        customerName: "Mike",
+      },
+      {
+        customerName: "Greg",
+      },
+      {
+        customerName: "Spencer",
+      },
+    ]);
+
+    Product.bulkCreate([
+      {
+        productName: "laptop",
+      },
+      {
+        productName: "hedphones",
+      },
+      {
+        productName: "soccer ball",
+      },
+      {
+        productName: "pencil sharper",
+      },
+    ]);
   })
   .catch((err) => {
     console.log(err);
