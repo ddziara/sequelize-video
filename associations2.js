@@ -41,62 +41,24 @@ const Post = sequelize.define(
 User.hasMany(Post);
 Post.belongsTo(User);
 
-let country, capital;
+let user, posts;
 
 sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    User.bulkCreate([
-      {
-        username: "WittCode",
-        password: "subscribe",
-      },
-      {
-        username: "Mike1234",
-        password: "dude78",
-      },
-      {
-        username: "FredGuy7",
-        password: "pizzaIsGood",
-      },
-    ]);
-
-    Post.bulkCreate([
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-      {
-        message: "This is an amazing post that I made online!",
-      },
-    ]);
+    return User.findOne({ where: { username: "WittCode" } });
+  })
+  .then((data) => {
+    user = data;
+    return Post.findAll();
+  })
+  .then(data => {
+    posts = data;
+    return user.addPosts(posts); 
+  })
+  .then(data=> {
+    console.log(data);
   })
   .catch((err) => {
     console.log(err);
