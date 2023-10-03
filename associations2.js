@@ -47,6 +47,56 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
+    User.bulkCreate([
+      {
+        username: "WittCode",
+        password: "subscribe",
+      },
+      {
+        username: "Mike1234",
+        password: "dude78",
+      },
+      {
+        username: "FredGuy7",
+        password: "pizzaIsGood",
+      },
+    ]);
+
+    Post.bulkCreate([
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+      {
+        message: "This is an amazing post that I made online!",
+      },
+    ]);
   })
   .catch((err) => {
     console.log(err);
