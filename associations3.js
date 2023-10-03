@@ -35,8 +35,21 @@ const Product = sequelize.define(
   { timestamps: false }
 );
 
-Customer.belongsToMany(Product, { through: "customerproduct" });
-Product.belongsToMany(Customer, { through: "customerproduct" });
+const CustomerProduct = sequelize.define(
+  "customerproduct",
+  {
+    customerproductId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+  },
+  { timestamps: false }
+);
+
+
+Customer.belongsToMany(Product, { through: CustomerProduct });
+Product.belongsToMany(Customer, { through: CustomerProduct });
 
 sequelize
   .sync({ alter: true })
