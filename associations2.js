@@ -38,7 +38,7 @@ const Post = sequelize.define(
   { timestamps: false }
 );
 
-User.hasMany(Post);
+User.hasMany(Post, { onDelete: "CASCADE" });
 Post.belongsTo(User);
 
 let user, posts;
@@ -47,15 +47,7 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    return User.findOne({ where: { username: "WittCode" } });
-  })
-  .then((data) => {
-    user = data;
-    return Post.findOne();
-  })
-  .then(data => {
-    posts = data;
-    return user.removePost(posts);
+    return User.destroy({ where: { username: "WittCode" } });
   })
   .then((data) => {
     console.log(data);
