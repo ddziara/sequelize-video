@@ -50,39 +50,21 @@ const CustomerProduct = sequelize.define(
 Customer.belongsToMany(Product, { through: CustomerProduct });
 Product.belongsToMany(Customer, { through: CustomerProduct });
 
+let customer, product;
+
 sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    Customer.bulkCreate([
-      {
-        customerName: "WittCode",
-      },
-      {
-        customerName: "Mike",
-      },
-      {
-        customerName: "Greg",
-      },
-      {
-        customerName: "Spencer",
-      },
-    ]);
-
-    Product.bulkCreate([
-      {
-        productName: "laptop",
-      },
-      {
-        productName: "hedphones",
-      },
-      {
-        productName: "soccer ball",
-      },
-      {
-        productName: "pencil sharper",
-      },
-    ]);
+    return Customer.findOne({ where: { customerName: "WittCode" } });
+  })
+  .then((data) => {
+    customer = data;
+    return Product.findAll();
+  })
+  .then((data) => {
+    product = data;
+    customer.addProducts(product);
   })
   .catch((err) => {
     console.log(err);
