@@ -51,9 +51,13 @@ sequelize
   })
   .then((data) => {
     user = data;
-    return user.countPosts();
+    return Post.findOne();
   })
-  .then(data=> {
+  .then(data => {
+    posts = data;
+    return user.removePost(posts);
+  })
+  .then((data) => {
     console.log(data);
   })
   .catch((err) => {
