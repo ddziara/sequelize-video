@@ -47,10 +47,19 @@ sequelize
   .sync({ alter: true })
   .then((data) => {
     // working with our updated table
-    return User.destroy({ where: { username: "WittCode" } });
+    return User.findOne();
   })
   .then((data) => {
+    user = data;
+    return Post.findOne();
+  })
+  .then((data) => {
+    posts = data;
+    posts.setUser(user)
+  })
+  .then(data => {
     console.log(data);
+
   })
   .catch((err) => {
     console.log(err);
