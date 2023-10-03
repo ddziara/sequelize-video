@@ -51,11 +51,7 @@ sequelize
   })
   .then((data) => {
     user = data;
-    return Post.findAll();
-  })
-  .then(data => {
-    posts = data;
-    return user.addPosts(posts); 
+    return user.countPosts();
   })
   .then(data=> {
     console.log(data);
